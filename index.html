@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#14161F">
+<title>Perfil Profissional — Estilo DISC</title>
+<style>
+  :root{
+    --bg:#14161F; --card:#1D2029; --card-soft:#181B23; --line:#2C3040;
+    --text:#EEF0F6; --muted:#9AA1B5;
+    --d:#F07A6B; --i:#F2C14C; --s:#6BD9A0; --c:#6FA8F0;
+    --ink:#14161F;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--text);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    font-size:15px; min-height:100vh;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .mono{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-variant-numeric:tabular-nums}
+  .wrap{max-width:480px;margin:0 auto;padding:24px 18px 40px}
+  button{font-family:inherit;border:none;cursor:pointer;background:none;color:inherit}
+  .oculta{display:none!important}
+
+  /* intro */
+  .marca{display:flex;gap:6px;margin-bottom:22px}
+  .marca span{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;color:var(--ink)}
+  h1{font-size:26px;line-height:1.2;letter-spacing:-.5px;margin-bottom:10px}
+  .sub{color:var(--muted);line-height:1.6;margin-bottom:18px}
+  .nota{background:var(--card-soft);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:12.5px;color:var(--muted);line-height:1.55;margin-bottom:22px}
+  .btn-p{display:block;width:100%;background:var(--text);color:var(--ink);font-size:16px;font-weight:700;border-radius:14px;padding:16px 0;text-align:center}
+  .btn-sec{display:block;width:100%;background:var(--card);color:var(--muted);font-size:14px;font-weight:600;border-radius:14px;padding:13px 0;text-align:center;margin-top:10px;border:1px solid var(--line)}
+
+  /* pergunta */
+  .progresso{height:4px;background:var(--card);border-radius:2px;overflow:hidden;margin-bottom:8px}
+  .progresso div{height:100%;background:var(--text);border-radius:2px;transition:width .25s}
+  .contador{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:40px}
+  .afirmacao{font-size:21px;line-height:1.45;font-weight:600;min-height:120px;margin-bottom:40px}
+  .escala{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+  .opcao{border:2px solid var(--line);border-radius:50%;background:var(--card-soft);transition:transform .1s}
+  .opcao:active{transform:scale(.92)}
+  .opcao.sel{border-color:var(--text);background:var(--text)}
+  .o1{width:52px;height:52px} .o2{width:44px;height:44px} .o3{width:38px;height:38px}
+  .o4{width:44px;height:44px} .o5{width:52px;height:52px}
+  .legenda{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:36px}
+  .voltar{color:var(--muted);font-size:14px;text-decoration:underline;padding:8px 0}
+
+  /* resultado */
+  .selo{display:inline-flex;gap:0;border-radius:14px;overflow:hidden;margin-bottom:14px}
+  .selo b{width:56px;height:56px;display:flex;align-items:center;justify-content:center;font-size:26px;color:var(--ink)}
+  h2{font-size:22px;letter-spacing:-.3px;margin-bottom:6px}
+  .desc-perfil{color:var(--muted);line-height:1.65;margin-bottom:24px}
+  .bloco{background:var(--card);border-radius:14px;padding:16px;margin-bottom:14px}
+  .titulo-sec{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+  .barra-linha{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .barra-letra{width:22px;font-weight:800;font-size:15px}
+  .barra-trilha{flex:1;height:14px;background:var(--card-soft);border-radius:7px;overflow:hidden}
+  .barra-fill{height:100%;border-radius:7px;transition:width .6s ease}
+  .barra-pct{width:42px;text-align:right;font-size:12px;color:var(--muted)}
+  .lista{list-style:none}
+  .lista li{padding:7px 0 7px 22px;position:relative;line-height:1.5;font-size:14px}
+  .lista li::before{content:"";position:absolute;left:2px;top:14px;width:8px;height:8px;border-radius:4px;background:var(--cor,var(--muted))}
+  .tags{display:flex;flex-wrap:wrap;gap:8px}
+  .tag{background:var(--card-soft);border:1px solid var(--line);border-radius:18px;padding:8px 13px;font-size:13px}
+  .rodape-nota{font-size:11.5px;color:var(--muted);line-height:1.55;margin:18px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- TELA: INTRO -->
+  <div id="telaIntro">
+    <div class="marca">
+      <span style="background:var(--d)">D</span>
+      <span style="background:var(--i)">I</span>
+      <span style="background:var(--s)">S</span>
+      <span style="background:var(--c)">C</span>
+    </div>
+    <h1>Qual é o seu perfil profissional?</h1>
+    <p class="sub">Responda 24 afirmações sobre como você age no dia a dia. Ao final, você descobre seu perfil comportamental no estilo DISC, com pontos fortes, pontos de atenção e áreas profissionais com maior afinidade.</p>
+    <p class="sub">Leva cerca de <strong style="color:var(--text)">4 minutos</strong>. Responda pensando em como você <em>realmente</em> é, não em como gostaria de ser.</p>
+    <div class="nota">Este é um instrumento de autoconhecimento inspirado na metodologia DISC, com fins indicativos. Não substitui avaliações psicométricas validadas nem orientação profissional individualizada.</div>
+    <button class="btn-p" onclick="iniciar()">Começar o teste</button>
+  </div>
+
+  <!-- TELA: PERGUNTA -->
+  <div id="telaPergunta" class="oculta">
+    <div class="progresso"><div id="barraProg" style="width:0%"></div></div>
+    <div class="contador" id="contador"></div>
+    <div class="afirmacao" id="afirmacao"></div>
+    <div class="escala">
+      <button class="opcao o1" onclick="responder(1)" aria-label="Discordo totalmente"></button>
+      <button class="opcao o2" onclick="responder(2)" aria-label="Discordo em parte"></button>
+      <button class="opcao o3" onclick="responder(3)" aria-label="Neutro"></button>
+      <button class="opcao o4" onclick="responder(4)" aria-label="Concordo em parte"></button>
+      <button class="opcao o5" onclick="responder(5)" aria-label="Concordo totalmente"></button>
+    </div>
+    <div class="legenda"><span>discordo</span><span>concordo</span></div>
+    <button class="voltar" id="btnVoltar" onclick="voltar()">← Voltar à anterior</button>
+  </div>
+
+  <!-- TELA: RESULTADO -->
+  <div id="telaResultado" class="oculta"></div>
+
+</div>
+
+<script>
+// ─── Afirmações (6 por dimensão, intercaladas) ──────────────────────
+const AFIRMACOES = [
+  ["D","Gosto de assumir o controle das situações e tomar decisões rápidas."],
+  ["I","Faço amizades e novas conexões com facilidade."],
+  ["S","Prefiro rotinas estáveis e um ambiente previsível."],
+  ["C","Presto muita atenção aos detalhes e à qualidade do que entrego."],
+  ["D","Me sinto confortável em ambientes competitivos, com metas desafiadoras."],
+  ["I","Gosto de convencer e entusiasmar as pessoas com minhas ideias."],
+  ["S","Tenho paciência para ouvir e apoiar colegas quando precisam."],
+  ["C","Gosto de seguir processos, padrões e regras claras."],
+  ["D","Prefiro agir logo a ficar esperando instruções detalhadas."],
+  ["I","Prefiro trabalhar em grupo a trabalhar sozinho."],
+  ["S","Evito conflitos e procuro manter a harmonia do grupo."],
+  ["C","Analiso dados e fatos antes de tomar uma decisão."],
+  ["D","Digo o que penso de forma direta, mesmo que gere desconforto."],
+  ["I","Sou otimista e costumo contagiar o ambiente ao meu redor."],
+  ["S","Termino o que começo, com consistência, mesmo sem pressa."],
+  ["C","Prefiro fazer certo a fazer rápido."],
+  ["D","Fico impaciente quando as coisas andam devagar demais."],
+  ["I","Falar em público me energiza mais do que me assusta."],
+  ["S","Mudanças bruscas me incomodam; prefiro transições graduais."],
+  ["C","Gosto de planejar com antecedência antes de executar."],
+  ["D","Assumo riscos calculados para alcançar resultados maiores."],
+  ["I","Gosto de variedade e novidade no meu dia a dia."],
+  ["S","As pessoas me consideram uma pessoa leal e confiável."],
+  ["C","Me incomodo ao ver erros que poderiam ter sido evitados."]
+];
+
+// ─── Conteúdo dos perfis ────────────────────────────────────────────
+const PERFIS = {
+  D:{nome:"Dominância",cor:"var(--d)",resumo:"orientação a resultados, iniciativa e coragem para decidir",
+    fortes:["Foco em resultados e senso de urgência","Decisão rápida, mesmo sob pressão","Iniciativa: prefere agir a esperar","Assume responsabilidade e riscos calculados","Direto ao ponto na comunicação"],
+    melhorias:["Desenvolver paciência e escuta ativa","Delegar sem microgerenciar","Considerar o impacto das decisões nas pessoas","Respeitar processos mesmo quando parecem lentos"],
+    carreiras:["Gestão e liderança de equipes","Empreendedorismo","Vendas B2B e negociação","Gestão de projetos","Direção comercial","Operações"]},
+  I:{nome:"Influência",cor:"var(--i)",resumo:"comunicação, entusiasmo e facilidade com pessoas",
+    fortes:["Comunicação envolvente e persuasiva","Constrói relacionamentos com facilidade","Otimismo que motiva o time","Criatividade e abertura ao novo","À vontade em apresentações e público"],
+    melhorias:["Manter o foco até concluir (follow-through)","Organizar detalhes e prazos","Ouvir na mesma proporção em que fala","Basear argumentos também em dados"],
+    carreiras:["Marketing e comunicação","Vendas consultivas","Treinamento e ensino","Relações públicas","Sucesso do cliente (CS)","Recrutamento e employer branding"]},
+  S:{nome:"Estabilidade",cor:"var(--s)",resumo:"constância, cooperação e confiabilidade",
+    fortes:["Consistência: termina o que começa","Escuta ativa e empatia genuína","Lealdade e espírito de equipe","Paciência com pessoas e processos","Presença que acalma o ambiente"],
+    melhorias:["Adaptar-se mais rápido a mudanças","Aprender a dizer não e impor limites","Expor opiniões mesmo em cenários de conflito","Ganhar ritmo em ambientes acelerados"],
+    carreiras:["Recursos humanos e desenvolvimento","Suporte e atendimento","Áreas de saúde e cuidado","Administração e back-office","Logística e planejamento","Educação"]},
+  C:{nome:"Conformidade",cor:"var(--c)",resumo:"análise, precisão e excelência técnica",
+    fortes:["Rigor analítico: decide com base em fatos","Atenção a detalhes e padrão de qualidade","Planejamento estruturado","Disciplina com processos e prazos técnicos","Pensamento crítico apurado"],
+    melhorias:["Equilibrar perfeccionismo com prazo","Tolerar ambiguidade e dados incompletos","Comunicar-se de forma mais calorosa","Aceitar o \u201cbom o suficiente\u201d quando cabível"],
+    carreiras:["Análise de dados e BI","Engenharia e desenvolvimento","Contabilidade e auditoria","Qualidade e compliance","Finanças","Pesquisa e área jurídica"]}
+};
+
+const COMBOS = {
+  DI:"Você une a energia de quem decide com o carisma de quem convence: perfil natural para liderar pela frente, vendendo a visão e cobrando o resultado.",
+  DS:"Você combina determinação com constância: decide rápido, mas sustenta a execução até o fim — perfil de quem entrega com consistência.",
+  DC:"Você é estrategista e exigente: junta a ousadia de decidir com o rigor de analisar. Perfil forte para liderar projetos técnicos e complexos.",
+  ID:"Você influencia com ousadia: comunica bem e não teme a disputa. Perfil de alto impacto em vendas, negociação e representação.",
+  IS:"Você é o comunicador acolhedor: conecta pessoas e as faz se sentirem ouvidas. Perfil forte para desenvolver times e relacionamentos de longo prazo.",
+  IC:"Você une carisma e raciocínio analítico: sabe traduzir dados e temas técnicos em histórias que convencem. Perfil de ponte entre negócio e técnica.",
+  SD:"Você é estável e determinado: prefere constância, mas não foge de assumir a frente quando é preciso. Perfil de liderança operacional confiável.",
+  SI:"Você apoia com sociabilidade: constrói harmonia e mantém o grupo unido. Perfil forte em atendimento, cuidado e gestão de pessoas.",
+  SC:"Você é consistente e meticuloso: entrega com qualidade, no ritmo certo, sem alarde. Perfil de confiança para operações críticas e rotinas essenciais.",
+  CD:"Você é o técnico que decide: domina o detalhe, mas não trava na análise. Perfil para arquitetar soluções e liderar tecnicamente.",
+  CI:"Você é analítico e comunicativo: além de dominar os dados, sabe apresentá-los. Perfil raro e valioso em BI, produto e consultoria.",
+  CS:"Você é preciso e constante: metódico, confiável e minucioso. Perfil ideal para áreas em que errar não é opção."
+};
+
+// ─── Estado ─────────────────────────────────────────────────────────
+let idx = 0;
+let respostas = new Array(AFIRMACOES.length).fill(0);
+
+function iniciar(){
+  idx = 0; respostas = new Array(AFIRMACOES.length).fill(0);
+  trocarTela("telaPergunta");
+  mostrarPergunta();
+}
+function trocarTela(id){
+  ["telaIntro","telaPergunta","telaResultado"].forEach(t=>document.getElementById(t).classList.add("oculta"));
+  document.getElementById(id).classList.remove("oculta");
+  window.scrollTo(0,0);
+}
+function mostrarPergunta(){
+  document.getElementById("barraProg").style.width = (idx/AFIRMACOES.length*100)+"%";
+  document.getElementById("contador").textContent = `Afirmação ${idx+1} de ${AFIRMACOES.length}`;
+  document.getElementById("afirmacao").textContent = AFIRMACOES[idx][1];
+  document.getElementById("btnVoltar").style.visibility = idx>0 ? "visible" : "hidden";
+  document.querySelectorAll(".opcao").forEach((b,i)=>{
+    b.classList.toggle("sel", respostas[idx]===i+1);
+  });
+}
+function responder(valor){
+  respostas[idx] = valor;
+  document.querySelectorAll(".opcao").forEach((b,i)=>b.classList.toggle("sel", valor===i+1));
+  setTimeout(()=>{
+    if(idx < AFIRMACOES.length-1){ idx++; mostrarPergunta(); }
+    else { resultado(); }
+  }, 180);
+}
+function voltar(){
+  if(idx>0){ idx--; mostrarPergunta(); }
+}
+
+// ─── Resultado ──────────────────────────────────────────────────────
+function resultado(){
+  const soma = {D:0,I:0,S:0,C:0};
+  AFIRMACOES.forEach((a,i)=>{ soma[a[0]] += respostas[i]; });
+  // 6 afirmações por dimensão: mínimo 6, máximo 30
+  const pct = {};
+  for(const k of ["D","I","S","C"]) pct[k] = Math.round((soma[k]-6)/24*100);
+
+  const ordem = ["D","I","S","C"].sort((a,b)=>pct[b]-pct[a]);
+  const p1 = ordem[0], p2 = ordem[1];
+  const P1 = PERFIS[p1], P2 = PERFIS[p2];
+  const combo = COMBOS[p1+p2] || "";
+  const empate = pct[p1]===pct[p2];
+
+  const barras = ["D","I","S","C"].map(k=>`
+    <div class="barra-linha">
+      <div class="barra-letra" style="color:${PERFIS[k].cor}">${k}</div>
+      <div class="barra-trilha"><div class="barra-fill" style="width:${Math.max(pct[k],3)}%;background:${PERFIS[k].cor}"></div></div>
+      <div class="barra-pct mono">${pct[k]}%</div>
+    </div>`).join("");
+
+  const li = (arr,cor)=>arr.map(x=>`<li style="--cor:${cor}">${x}</li>`).join("");
+  const tags = [...new Set([...P1.carreiras.slice(0,4), ...P2.carreiras.slice(0,3)])]
+    .map(c=>`<div class="tag">${c}</div>`).join("");
+
+  document.getElementById("telaResultado").innerHTML = `
+    <div class="selo">
+      <b style="background:${P1.cor}">${p1}</b>
+      <b style="background:${P2.cor}">${p2}</b>
+    </div>
+    <h2>Perfil ${P1.nome}${empate?" e ":" com "}${P2.nome}</h2>
+    <p class="desc-perfil">Seu estilo predominante é <strong style="color:${P1.cor}">${P1.nome}</strong> (${P1.resumo}), apoiado por <strong style="color:${P2.cor}">${P2.nome}</strong> (${P2.resumo}).</p>
+    ${combo?`<p class="desc-perfil">${combo}</p>`:""}
+
+    <div class="bloco">
+      <div class="titulo-sec">Seu mapa DISC</div>
+      ${barras}
+    </div>
+
+    <div class="bloco">
+      <div class="titulo-sec">Pontos fortes</div>
+      <ul class="lista">${li(P1.fortes,P1.cor)}${li(P2.fortes.slice(0,2),P2.cor)}</ul>
+    </div>
+
+    <div class="bloco">
+      <div class="titulo-sec">Pontos de desenvolvimento</div>
+      <ul class="lista">${li(P1.melhorias,P1.cor)}${li(P2.melhorias.slice(0,1),P2.cor)}</ul>
+    </div>
+
+    <div class="bloco">
+      <div class="titulo-sec">Áreas profissionais com afinidade</div>
+      <div class="tags">${tags}</div>
+    </div>
+
+    <p class="rodape-nota">Nenhum perfil é melhor que outro — cada estilo agrega valor diferente a um time. Este resultado reflete suas respostas de hoje e é um ponto de partida para reflexão, não um veredito. Instrumento inspirado no DISC, sem validação psicométrica formal.</p>
+
+    <button class="btn-p" onclick="iniciar()">Refazer o teste</button>
+    <button class="btn-sec" onclick="trocarTela('telaIntro')">Voltar ao início</button>
+  `;
+  trocarTela("telaResultado");
+}
+</script>
+</body>
+</html>
