@@ -136,23 +136,48 @@ const AFIRMACOES = [
 ];
 
 // ─── Conteúdo dos perfis ────────────────────────────────────────────
+const PROFISSOES = [
+  {n:"Vendas e negociação",        w:[.40,.40,.05,.15]},
+  {n:"Atendimento ao cliente",     w:[.05,.35,.45,.15]},
+  {n:"Marketing e redes sociais",  w:[.15,.50,.10,.25]},
+  {n:"Supervisão e liderança de equipe", w:[.45,.20,.20,.15]},
+  {n:"Empreendedorismo",           w:[.45,.30,.05,.20]},
+  {n:"Logística e estoque",        w:[.10,.05,.45,.40]},
+  {n:"Administrativo e secretariado", w:[.05,.10,.40,.45]},
+  {n:"Financeiro e contabilidade", w:[.10,.05,.30,.55]},
+  {n:"Programação e TI",           w:[.15,.05,.20,.60]},
+  {n:"Análise de dados",           w:[.10,.05,.15,.70]},
+  {n:"Design e criação",           w:[.10,.45,.15,.30]},
+  {n:"Educação e treinamento",     w:[.10,.35,.35,.20]},
+  {n:"Saúde e cuidado de pessoas", w:[.05,.15,.55,.25]},
+  {n:"Recursos humanos",           w:[.10,.30,.40,.20]},
+  {n:"Produção e operação industrial", w:[.10,.05,.50,.35]},
+  {n:"Manutenção e áreas técnicas", w:[.15,.05,.35,.45]},
+  {n:"Segurança do trabalho",      w:[.15,.05,.30,.50]},
+  {n:"Comunicação e jornalismo",   w:[.20,.45,.10,.25]},
+  {n:"Gastronomia e cozinha",      w:[.20,.15,.40,.25]},
+  {n:"Engenharia",                 w:[.25,.05,.15,.55]},
+  {n:"Área jurídica",              w:[.25,.10,.15,.50]},
+  {n:"Recepção e hotelaria",       w:[.05,.40,.40,.15]},
+  {n:"Compras e suprimentos",      w:[.30,.15,.20,.35]},
+  {n:"Gestão de projetos",         w:[.35,.20,.15,.30]},
+  {n:"Corretagem e vendas imobiliárias", w:[.30,.45,.10,.15]},
+  {n:"Estética e beleza",          w:[.10,.45,.35,.10]}
+];
+
 const PERFIS = {
   D:{nome:"Dominância",cor:"var(--d)",resumo:"orientação a resultados, iniciativa e coragem para decidir",
     fortes:["Foco em resultados e senso de urgência","Decisão rápida, mesmo sob pressão","Iniciativa: prefere agir a esperar","Assume responsabilidade e riscos calculados","Direto ao ponto na comunicação"],
-    melhorias:["Desenvolver paciência e escuta ativa","Delegar sem microgerenciar","Considerar o impacto das decisões nas pessoas","Respeitar processos mesmo quando parecem lentos"],
-    carreiras:["Gestão e liderança de equipes","Empreendedorismo","Vendas B2B e negociação","Gestão de projetos","Direção comercial","Operações"]},
+    melhorias:["Desenvolver paciência e escuta ativa","Delegar sem microgerenciar","Considerar o impacto das decisões nas pessoas","Respeitar processos mesmo quando parecem lentos"]},
   I:{nome:"Influência",cor:"var(--i)",resumo:"comunicação, entusiasmo e facilidade com pessoas",
     fortes:["Comunicação envolvente e persuasiva","Constrói relacionamentos com facilidade","Otimismo que motiva o time","Criatividade e abertura ao novo","À vontade em apresentações e público"],
-    melhorias:["Manter o foco até concluir (follow-through)","Organizar detalhes e prazos","Ouvir na mesma proporção em que fala","Basear argumentos também em dados"],
-    carreiras:["Marketing e comunicação","Vendas consultivas","Treinamento e ensino","Relações públicas","Sucesso do cliente (CS)","Recrutamento e employer branding"]},
+    melhorias:["Manter o foco até concluir (follow-through)","Organizar detalhes e prazos","Ouvir na mesma proporção em que fala","Basear argumentos também em dados"]},
   S:{nome:"Estabilidade",cor:"var(--s)",resumo:"constância, cooperação e confiabilidade",
     fortes:["Consistência: termina o que começa","Escuta ativa e empatia genuína","Lealdade e espírito de equipe","Paciência com pessoas e processos","Presença que acalma o ambiente"],
-    melhorias:["Adaptar-se mais rápido a mudanças","Aprender a dizer não e impor limites","Expor opiniões mesmo em cenários de conflito","Ganhar ritmo em ambientes acelerados"],
-    carreiras:["Recursos humanos e desenvolvimento","Suporte e atendimento","Áreas de saúde e cuidado","Administração e back-office","Logística e planejamento","Educação"]},
+    melhorias:["Adaptar-se mais rápido a mudanças","Aprender a dizer não e impor limites","Expor opiniões mesmo em cenários de conflito","Ganhar ritmo em ambientes acelerados"]},
   C:{nome:"Conformidade",cor:"var(--c)",resumo:"análise, precisão e excelência técnica",
     fortes:["Rigor analítico: decide com base em fatos","Atenção a detalhes e padrão de qualidade","Planejamento estruturado","Disciplina com processos e prazos técnicos","Pensamento crítico apurado"],
-    melhorias:["Equilibrar perfeccionismo com prazo","Tolerar ambiguidade e dados incompletos","Comunicar-se de forma mais calorosa","Aceitar o \u201cbom o suficiente\u201d quando cabível"],
-    carreiras:["Análise de dados e BI","Engenharia e desenvolvimento","Contabilidade e auditoria","Qualidade e compliance","Finanças","Pesquisa e área jurídica"]}
+    melhorias:["Equilibrar perfeccionismo com prazo","Tolerar ambiguidade e dados incompletos","Comunicar-se de forma mais calorosa","Aceitar o \u201cbom o suficiente\u201d quando cabível"]}
 };
 
 const COMBOS = {
@@ -166,7 +191,7 @@ const COMBOS = {
   SI:"Você apoia com sociabilidade: constrói harmonia e mantém o grupo unido. Perfil forte em atendimento, cuidado e gestão de pessoas.",
   SC:"Você é consistente e meticuloso: entrega com qualidade, no ritmo certo, sem alarde. Perfil de confiança para operações críticas e rotinas essenciais.",
   CD:"Você é o técnico que decide: domina o detalhe, mas não trava na análise. Perfil para arquitetar soluções e liderar tecnicamente.",
-  CI:"Você é analítico e comunicativo: além de dominar os dados, sabe apresentá-los. Perfil raro e valioso em BI, produto e consultoria.",
+  CI:"Você é analítico e comunicativo: domina os detalhes e ainda sabe explicá-los com clareza. Perfil valioso onde técnica e pessoas se encontram.",
   CS:"Você é preciso e constante: metódico, confiável e minucioso. Perfil ideal para áreas em que errar não é opção."
 };
 
@@ -227,8 +252,21 @@ function resultado(){
     </div>`).join("");
 
   const li = (arr,cor)=>arr.map(x=>`<li style="--cor:${cor}">${x}</li>`).join("");
-  const tags = [...new Set([...P1.carreiras.slice(0,4), ...P2.carreiras.slice(0,3)])]
-    .map(c=>`<div class="tag">${c}</div>`).join("");
+
+  // compatibilidade: média do perfil ponderada pelos pesos de cada profissão
+  const top3 = PROFISSOES.map(p=>({
+      n:p.n,
+      score: Math.round(p.w[0]*pct.D + p.w[1]*pct.I + p.w[2]*pct.S + p.w[3]*pct.C)
+    }))
+    .sort((a,b)=>b.score-a.score)
+    .slice(0,3);
+  const corTop = [P1.cor, P1.cor, P2.cor];
+  const blocoProf = top3.map((p,i)=>`
+    <div class="barra-linha">
+      <div style="flex:1;font-size:14px">${i+1}. ${p.n}</div>
+      <div class="barra-trilha" style="max-width:110px"><div class="barra-fill" style="width:${p.score}%;background:${corTop[i]}"></div></div>
+      <div class="barra-pct mono" style="width:46px">${p.score}%</div>
+    </div>`).join("");
 
   document.getElementById("telaResultado").innerHTML = `
     <div class="selo">
@@ -255,8 +293,8 @@ function resultado(){
     </div>
 
     <div class="bloco">
-      <div class="titulo-sec">Áreas profissionais com afinidade</div>
-      <div class="tags">${tags}</div>
+      <div class="titulo-sec">Profissões mais compatíveis com você</div>
+      ${blocoProf}
     </div>
 
     <p class="rodape-nota">Nenhum perfil é melhor que outro — cada estilo agrega valor diferente a um time. Este resultado reflete suas respostas de hoje e é um ponto de partida para reflexão, não um veredito. Instrumento inspirado no DISC, sem validação psicométrica formal.</p>
