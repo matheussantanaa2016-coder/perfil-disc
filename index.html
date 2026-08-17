@@ -3,306 +3,685 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#14161F">
-<title>Perfil Profissional — Estilo DISC</title>
+<meta name="theme-color" content="#0F241B">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Finanças">
+<link rel="manifest" href="./manifest.json">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<link rel="icon" type="image/png" href="./icon-192.png">
+<title>Controle Financeiro</title>
 <style>
   :root{
-    --bg:#14161F; --card:#1D2029; --card-soft:#181B23; --line:#2C3040;
-    --text:#EEF0F6; --muted:#9AA1B5;
-    --d:#F07A6B; --i:#F2C14C; --s:#6BD9A0; --c:#6FA8F0;
-    --ink:#14161F;
+    --bg:#0F241B; --card:#1A3628; --card-soft:#153020; --line:#2A4A38;
+    --text:#EDF5EE; --muted:#9DBBAA; --mint:#7FE0A7; --coral:#F2A08B;
+    --amber:#F2C94C; --mint-dark:#0F241B;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{
     background:var(--bg); color:var(--text);
     font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-    font-size:15px; min-height:100vh;
+    font-size:14px; min-height:100vh; padding-bottom:100px;
     -webkit-tap-highlight-color:transparent;
   }
   .mono{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-variant-numeric:tabular-nums}
-  .wrap{max-width:480px;margin:0 auto;padding:24px 18px 40px}
+  .wrap{max-width:480px;margin:0 auto;padding:20px 16px}
   button{font-family:inherit;border:none;cursor:pointer;background:none;color:inherit}
-  .oculta{display:none!important}
 
-  /* intro */
-  .marca{display:flex;gap:6px;margin-bottom:22px}
-  .marca span{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;color:var(--ink)}
-  h1{font-size:26px;line-height:1.2;letter-spacing:-.5px;margin-bottom:10px}
-  .sub{color:var(--muted);line-height:1.6;margin-bottom:18px}
-  .nota{background:var(--card-soft);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:12.5px;color:var(--muted);line-height:1.55;margin-bottom:22px}
-  .btn-p{display:block;width:100%;background:var(--text);color:var(--ink);font-size:16px;font-weight:700;border-radius:14px;padding:16px 0;text-align:center}
-  .btn-sec{display:block;width:100%;background:var(--card);color:var(--muted);font-size:14px;font-weight:600;border-radius:14px;padding:13px 0;text-align:center;margin-top:10px;border:1px solid var(--line)}
+  /* cabeçalho */
+  .topo{display:flex;align-items:center;justify-content:space-between}
+  .nav-mes{font-size:22px;color:var(--muted);padding:4px 14px;border-radius:10px}
+  .mes-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-align:center}
 
-  /* pergunta */
-  .progresso{height:4px;background:var(--card);border-radius:2px;overflow:hidden;margin-bottom:8px}
-  .progresso div{height:100%;background:var(--text);border-radius:2px;transition:width .25s}
-  .contador{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:40px}
-  .afirmacao{font-size:21px;line-height:1.45;font-weight:600;min-height:120px;margin-bottom:40px}
-  .escala{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-  .opcao{border:2px solid var(--line);border-radius:50%;background:var(--card-soft);transition:transform .1s}
-  .opcao:active{transform:scale(.92)}
-  .opcao.sel{border-color:var(--text);background:var(--text)}
-  .o1{width:52px;height:52px} .o2{width:44px;height:44px} .o3{width:38px;height:38px}
-  .o4{width:44px;height:44px} .o5{width:52px;height:52px}
-  .legenda{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:36px}
-  .voltar{color:var(--muted);font-size:14px;text-decoration:underline;padding:8px 0}
+  /* saldo */
+  .saldo{text-align:center;margin:10px 0 4px}
+  .btn-olho{font-size:15px;color:var(--muted);padding:2px 8px;vertical-align:middle}
+  .saldo .rotulo{font-size:12px;color:var(--muted);margin-bottom:4px}
+  .saldo .valor{font-size:17px;font-weight:700;display:inline-block}
+  .previsto{text-align:center;font-size:12px;color:var(--muted);margin-bottom:20px;line-height:1.5}
+  .previsto b{color:var(--text)}
 
-  /* resultado */
-  .selo{display:inline-flex;gap:0;border-radius:14px;overflow:hidden;margin-bottom:14px}
-  .selo b{width:56px;height:56px;display:flex;align-items:center;justify-content:center;font-size:26px;color:var(--ink)}
-  h2{font-size:22px;letter-spacing:-.3px;margin-bottom:6px}
-  .desc-perfil{color:var(--muted);line-height:1.65;margin-bottom:24px}
-  .bloco{background:var(--card);border-radius:14px;padding:16px;margin-bottom:14px}
-  .titulo-sec{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
-  .barra-linha{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-  .barra-letra{width:22px;font-weight:800;font-size:15px}
-  .barra-trilha{flex:1;height:14px;background:var(--card-soft);border-radius:7px;overflow:hidden}
-  .barra-fill{height:100%;border-radius:7px;transition:width .6s ease}
-  .barra-pct{width:42px;text-align:right;font-size:12px;color:var(--muted)}
-  .lista{list-style:none}
-  .lista li{padding:7px 0 7px 22px;position:relative;line-height:1.5;font-size:14px}
-  .lista li::before{content:"";position:absolute;left:2px;top:14px;width:8px;height:8px;border-radius:4px;background:var(--cor,var(--muted))}
-  .tags{display:flex;flex-wrap:wrap;gap:8px}
-  .tag{background:var(--card-soft);border:1px solid var(--line);border-radius:18px;padding:8px 13px;font-size:13px}
-  .rodape-nota{font-size:11.5px;color:var(--muted);line-height:1.55;margin:18px 0}
+  /* cards resumo */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+  .card{background:var(--card);border-radius:14px;padding:11px 14px}
+  .card .rotulo{font-size:11px;color:var(--muted)}
+  .card .num{font-size:16px;font-weight:700;margin-top:2px}
+
+  .secao{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+  .bloco{background:var(--card);border-radius:14px;padding:16px;margin-bottom:20px}
+
+  /* gráfico de rosca */
+  .rosca-area{display:flex;flex-direction:column;align-items:center;gap:14px;margin-bottom:8px}
+  .rosca-area svg{display:block}
+  .cat-linha{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:13px;width:100%}
+  .ponto{width:8px;height:8px;border-radius:4px;flex-shrink:0}
+  .cat-linha .pct{font-size:11px;color:var(--muted)}
+  .cat-linha .val{min-width:82px;text-align:right;font-size:13px;font-weight:600}
+
+  /* itens de lançamento */
+  .item{display:flex;align-items:center;gap:8px;background:var(--card);border-radius:12px;padding:10px 12px;margin-bottom:7px;cursor:pointer}
+  .item.plano{background:var(--card-soft);border:1px dashed var(--line)}
+  .item .dia{font-size:10px;color:var(--muted);width:32px;flex-shrink:0}
+  .item .dia.vencido{color:var(--coral);font-weight:700}
+  .item .meio{flex:1;min-width:0}
+  .item .desc{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .item .cat{font-size:10px;color:var(--muted);margin-top:1px}
+  .item .vlr{font-size:12px;font-weight:700;flex-shrink:0}
+  .item .acao{font-size:13px;color:var(--muted);padding:6px 4px}
+  .badge-rec{font-size:10px;color:var(--amber)}
+  .chk{width:20px;height:20px;border:1.5px solid var(--muted);border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:0;background:transparent}
+  .chk.on{background:var(--mint);border-color:var(--mint)}
+  .chk svg{display:block}
+  .vazio{background:var(--card-soft);border-radius:14px;padding:20px;text-align:center;color:var(--muted);font-size:13px;margin-bottom:20px;line-height:1.6}
+  .vazio b{color:var(--mint)}
+
+  .cor-mint{color:var(--mint)} .cor-coral{color:var(--coral)} .cor-amber{color:var(--amber)}
+
+  /* recorrências ativas */
+  .link-rec{font-size:12px;color:var(--muted);text-decoration:underline;padding:4px 0;margin-bottom:16px;display:inline-block}
+  .rec-regra{display:flex;align-items:center;gap:8px;background:var(--card-soft);border-radius:12px;padding:10px 12px;margin-bottom:7px;font-size:13px}
+  .rec-regra .freq{font-size:11px;color:var(--amber);margin-top:2px}
+
+  /* botão flutuante */
+  .fab{
+    position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+    background:var(--mint);color:var(--mint-dark);font-size:15px;font-weight:700;
+    padding:13px 26px;border-radius:28px;box-shadow:0 4px 16px rgba(0,0,0,.4);z-index:5;
+  }
+
+  /* modal */
+  .overlay{position:fixed;inset:0;background:rgba(6,16,11,.7);display:none;align-items:flex-end;justify-content:center;z-index:10}
+  .overlay.aberto{display:flex}
+  .folha{background:var(--card);border-radius:20px 20px 0 0;padding:20px 16px 32px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto}
+  .toggle2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+  .toggle3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:6px}
+  .toggle2 button,.toggle3 button{padding:11px 4px;border-radius:12px;font-size:13px;font-weight:600;background:var(--card-soft);color:var(--muted)}
+  .ativo-despesa{background:var(--coral)!important;color:var(--mint-dark)!important}
+  .ativo-receita{background:var(--mint)!important;color:var(--mint-dark)!important}
+  .ativo-neutro{background:var(--amber)!important;color:var(--mint-dark)!important}
+  label{font-size:12px;color:var(--muted);display:block}
+  .dica{font-size:12px;color:var(--amber);margin:-8px 0 14px;min-height:0}
+  input,select{
+    width:100%;background:var(--card-soft);border:1px solid var(--line);border-radius:12px;
+    color:var(--text);font-size:16px;padding:13px 14px;margin:6px 0 14px;outline:none;font-family:inherit;
+  }
+  input#valor{font-size:22px}
+  input:focus{border-color:var(--mint)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 14px}
+  .chip{padding:7px 12px;font-size:13px;border-radius:20px;background:var(--card-soft);border:1px solid var(--line);font-weight:600}
+  .chip.sel{background:var(--mint);color:var(--mint-dark);border-color:var(--mint)}
+  .chip.nova{background:transparent;color:var(--mint);border:1px dashed var(--mint)}
+  .linha-nova{display:none;gap:8px;margin-bottom:14px}
+  .linha-nova.aberta{display:flex}
+  .linha-nova input{margin:0;flex:1}
+  .linha-nova button{background:var(--mint);color:var(--mint-dark);border-radius:12px;padding:10px 16px;font-weight:600}
+  .erro{color:var(--coral);font-size:13px;margin-bottom:10px;display:none}
+  .acoes{display:grid;grid-template-columns:1fr 2fr;gap:8px}
+  .acoes .cancelar{background:var(--card-soft);color:var(--muted);border-radius:12px;padding:13px 0;font-weight:600;font-size:14px}
+  .acoes .salvar{background:var(--mint);color:var(--mint-dark);border-radius:12px;padding:13px 0;font-size:15px;font-weight:700}
+
+  .rodape{display:flex;justify-content:center;margin-top:8px}
+  .btn-csv{font-size:12px;color:var(--muted);text-decoration:underline;padding:8px}
 </style>
 </head>
 <body>
 <div class="wrap">
-
-  <!-- TELA: INTRO -->
-  <div id="telaIntro">
-    <div class="marca">
-      <span style="background:var(--d)">D</span>
-      <span style="background:var(--i)">I</span>
-      <span style="background:var(--s)">S</span>
-      <span style="background:var(--c)">C</span>
-    </div>
-    <h1>Qual é o seu perfil profissional?</h1>
-    <p class="sub">Responda 24 afirmações sobre como você age no dia a dia. Ao final, você descobre seu perfil comportamental no estilo DISC, com pontos fortes, pontos de atenção e áreas profissionais com maior afinidade.</p>
-    <p class="sub">Leva cerca de <strong style="color:var(--text)">4 minutos</strong>. Responda pensando em como você <em>realmente</em> é, não em como gostaria de ser.</p>
-    <div class="nota">Este é um instrumento de autoconhecimento inspirado na metodologia DISC, com fins indicativos. Não substitui avaliações psicométricas validadas nem orientação profissional individualizada.</div>
-    <button class="btn-p" onclick="iniciar()">Começar o teste</button>
+  <div class="topo">
+    <button class="nav-mes" onclick="mudarMes(-1)" aria-label="Mês anterior">‹</button>
+    <div class="mes-label" id="mesLabel"></div>
+    <button class="nav-mes" onclick="mudarMes(1)" aria-label="Próximo mês">›</button>
   </div>
 
-  <!-- TELA: PERGUNTA -->
-  <div id="telaPergunta" class="oculta">
-    <div class="progresso"><div id="barraProg" style="width:0%"></div></div>
-    <div class="contador" id="contador"></div>
-    <div class="afirmacao" id="afirmacao"></div>
-    <div class="escala">
-      <button class="opcao o1" onclick="responder(1)" aria-label="Discordo totalmente"></button>
-      <button class="opcao o2" onclick="responder(2)" aria-label="Discordo em parte"></button>
-      <button class="opcao o3" onclick="responder(3)" aria-label="Neutro"></button>
-      <button class="opcao o4" onclick="responder(4)" aria-label="Concordo em parte"></button>
-      <button class="opcao o5" onclick="responder(5)" aria-label="Concordo totalmente"></button>
-    </div>
-    <div class="legenda"><span>discordo</span><span>concordo</span></div>
-    <button class="voltar" id="btnVoltar" onclick="voltar()">← Voltar à anterior</button>
+  <div class="saldo">
+    <span class="rotulo">saldo do mês:</span>
+    <span class="valor mono" id="saldoValor">R$ 0,00</span>
+    <button class="btn-olho" onclick="alternarOculto()" id="btnOlho" aria-label="Ocultar valores"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg></button>
+  </div>
+  <div class="previsto" id="previstoLinha"></div>
+
+  <div class="grid2">
+    <div class="card"><div class="rotulo">Receitas</div><div class="num mono cor-mint" id="recValor">R$ 0,00</div></div>
+    <div class="card"><div class="rotulo">Despesas</div><div class="num mono cor-coral" id="despValor">R$ 0,00</div></div>
   </div>
 
-  <!-- TELA: RESULTADO -->
-  <div id="telaResultado" class="oculta"></div>
+  <div id="secaoPlanejados"></div>
+  <div id="secaoRecorrencias"></div>
+  <div id="secaoCategorias"></div>
 
+  <div class="secao">Lançamentos</div>
+  <div id="listaLancamentos"></div>
+
+  <div class="rodape"><button class="btn-csv" onclick="exportarCSV()">Exportar CSV</button></div>
+</div>
+
+<button class="fab" onclick="abrirForm()">+ Adicionar</button>
+
+<!-- Formulário -->
+<div class="overlay" id="overlay" onclick="if(event.target===this)fecharForm()">
+  <div class="folha">
+    <div class="toggle2">
+      <button onclick="setTipo('despesa')" id="btnDespesa">Despesa</button>
+      <button onclick="setTipo('receita')" id="btnReceita">Receita</button>
+    </div>
+
+    <div class="toggle2" id="blocoStatus">
+      <button onclick="setStatus('efetivado')" id="btnEfetivado">Já pago / recebido</button>
+      <button onclick="setStatus('planejado')" id="btnPlanejado">Planejado (futuro)</button>
+    </div>
+
+    <div class="toggle2" id="blocoEscopo" style="display:none">
+      <button onclick="setEscopo('so')" id="btnEscopoSo">Só esta ocorrência</button>
+      <button onclick="setEscopo('todas')" id="btnEscopoTodas">Todas as futuras</button>
+    </div>
+
+    <div id="blocoFreq">
+    <label>Repetir</label>
+    <div class="toggle3">
+      <button onclick="setFreq('unica')" id="btnUnica">Não</button>
+      <button onclick="setFreq('semanal')" id="btnSemanal">Toda semana</button>
+      <button onclick="setFreq('mensal')" id="btnMensal">Todo mês</button>
+    </div>
+    <div class="dica" id="dicaFreq"></div>
+    </div>
+
+    <label for="valor">Valor (R$)</label>
+    <input id="valor" inputmode="numeric" placeholder="0,00" oninput="mascaraValor(this)">
+
+    <label for="descricao">Descrição (opcional)</label>
+    <input id="descricao" placeholder="Ex.: aluguel, cartão, salário…">
+
+    <label for="dataInput">Data <span id="dicaData" style="color:var(--amber)"></span></label>
+    <input type="date" id="dataInput" onchange="atualizarDicaFreq()">
+
+    <label>Categoria</label>
+    <div class="chips" id="chipsCats"></div>
+    <div class="linha-nova" id="linhaNova">
+      <input id="novaCat" placeholder="Nome da categoria">
+      <button onclick="criarCategoria()">Criar</button>
+    </div>
+
+    <div class="erro" id="erroMsg"></div>
+
+    <div class="acoes">
+      <button class="cancelar" onclick="fecharForm()">Cancelar</button>
+      <button class="salvar" id="btnSalvar" onclick="salvarLancamento()">Salvar lançamento</button>
+    </div>
+  </div>
 </div>
 
 <script>
-// ─── Afirmações (6 por dimensão, intercaladas) ──────────────────────
-const AFIRMACOES = [
-  ["D","Gosto de assumir o controle das situações e tomar decisões rápidas."],
-  ["I","Faço amizades e novas conexões com facilidade."],
-  ["S","Prefiro rotinas estáveis e um ambiente previsível."],
-  ["C","Presto muita atenção aos detalhes e à qualidade do que entrego."],
-  ["D","Me sinto confortável em ambientes competitivos, com metas desafiadoras."],
-  ["I","Gosto de convencer e entusiasmar as pessoas com minhas ideias."],
-  ["S","Tenho paciência para ouvir e apoiar colegas quando precisam."],
-  ["C","Gosto de seguir processos, padrões e regras claras."],
-  ["D","Prefiro agir logo a ficar esperando instruções detalhadas."],
-  ["I","Prefiro trabalhar em grupo a trabalhar sozinho."],
-  ["S","Evito conflitos e procuro manter a harmonia do grupo."],
-  ["C","Analiso dados e fatos antes de tomar uma decisão."],
-  ["D","Digo o que penso de forma direta, mesmo que gere desconforto."],
-  ["I","Sou otimista e costumo contagiar o ambiente ao meu redor."],
-  ["S","Termino o que começo, com consistência, mesmo sem pressa."],
-  ["C","Prefiro fazer certo a fazer rápido."],
-  ["D","Fico impaciente quando as coisas andam devagar demais."],
-  ["I","Falar em público me energiza mais do que me assusta."],
-  ["S","Mudanças bruscas me incomodam; prefiro transições graduais."],
-  ["C","Gosto de planejar com antecedência antes de executar."],
-  ["D","Assumo riscos calculados para alcançar resultados maiores."],
-  ["I","Gosto de variedade e novidade no meu dia a dia."],
-  ["S","As pessoas me consideram uma pessoa leal e confiável."],
-  ["C","Me incomodo ao ver erros que poderiam ter sido evitados."]
-];
+// ─── Constantes ─────────────────────────────────────────────────────
+const MESES=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
+const DIAS_SEMANA=["domingo","segunda-feira","terça-feira","quarta-feira","quinta-feira","sexta-feira","sábado"];
+const CORES=["#7FE0A7","#F2C94C","#F2A08B","#8FC1E8","#C9A0F2","#E88FB4","#A8E86F","#9DBBAA","#E8C08F","#7FD0E0"];
+const CATS_PADRAO={despesa:["Alimentação","Mercado","Transporte","Moradia","Saúde","Lazer","Educação","Outros"],receita:["Salário","Freelance","Investimentos","Outros"]};
 
-// ─── Conteúdo dos perfis ────────────────────────────────────────────
-const PROFISSOES = [
-  {n:"Vendas e negociação",        w:[.40,.40,.05,.15]},
-  {n:"Atendimento ao cliente",     w:[.05,.35,.45,.15]},
-  {n:"Marketing e redes sociais",  w:[.15,.50,.10,.25]},
-  {n:"Supervisão e liderança de equipe", w:[.45,.20,.20,.15]},
-  {n:"Empreendedorismo",           w:[.45,.30,.05,.20]},
-  {n:"Logística e estoque",        w:[.10,.05,.45,.40]},
-  {n:"Administrativo e secretariado", w:[.05,.10,.40,.45]},
-  {n:"Financeiro e contabilidade", w:[.10,.05,.30,.55]},
-  {n:"Programação e TI",           w:[.15,.05,.20,.60]},
-  {n:"Análise de dados",           w:[.10,.05,.15,.70]},
-  {n:"Design e criação",           w:[.10,.45,.15,.30]},
-  {n:"Educação e treinamento",     w:[.10,.35,.35,.20]},
-  {n:"Saúde e cuidado de pessoas", w:[.05,.15,.55,.25]},
-  {n:"Recursos humanos",           w:[.10,.30,.40,.20]},
-  {n:"Produção e operação industrial", w:[.10,.05,.50,.35]},
-  {n:"Manutenção e áreas técnicas", w:[.15,.05,.35,.45]},
-  {n:"Segurança do trabalho",      w:[.15,.05,.30,.50]},
-  {n:"Comunicação e jornalismo",   w:[.20,.45,.10,.25]},
-  {n:"Gastronomia e cozinha",      w:[.20,.15,.40,.25]},
-  {n:"Engenharia",                 w:[.25,.05,.15,.55]},
-  {n:"Área jurídica",              w:[.25,.10,.15,.50]},
-  {n:"Recepção e hotelaria",       w:[.05,.40,.40,.15]},
-  {n:"Compras e suprimentos",      w:[.30,.15,.20,.35]},
-  {n:"Gestão de projetos",         w:[.35,.20,.15,.30]},
-  {n:"Corretagem e vendas imobiliárias", w:[.30,.45,.10,.15]},
-  {n:"Estética e beleza",          w:[.10,.45,.35,.10]}
-];
+let dados = carregar();
+let mesAtual = (()=>{const d=new Date();return{ano:d.getFullYear(),mes:d.getMonth()}})();
+let fTipo="despesa", fStatus="efetivado", fCategoria="", fFreq="unica";
+let mostrarRegras=false;
+let editandoId=null;
+let editandoRec=null;   // {recId, data} — ocorrência recorrente em edição
+let editandoRegra=null; // id da regra em edição
+let fEscopo="so";
 
-const PERFIS = {
-  D:{nome:"Dominância",cor:"var(--d)",resumo:"orientação a resultados, iniciativa e coragem para decidir",
-    fortes:["Foco em resultados e senso de urgência","Decisão rápida, mesmo sob pressão","Iniciativa: prefere agir a esperar","Assume responsabilidade e riscos calculados","Direto ao ponto na comunicação"],
-    melhorias:["Desenvolver paciência e escuta ativa","Delegar sem microgerenciar","Considerar o impacto das decisões nas pessoas","Respeitar processos mesmo quando parecem lentos"]},
-  I:{nome:"Influência",cor:"var(--i)",resumo:"comunicação, entusiasmo e facilidade com pessoas",
-    fortes:["Comunicação envolvente e persuasiva","Constrói relacionamentos com facilidade","Otimismo que motiva o time","Criatividade e abertura ao novo","À vontade em apresentações e público"],
-    melhorias:["Manter o foco até concluir (follow-through)","Organizar detalhes e prazos","Ouvir na mesma proporção em que fala","Basear argumentos também em dados"]},
-  S:{nome:"Estabilidade",cor:"var(--s)",resumo:"constância, cooperação e confiabilidade",
-    fortes:["Consistência: termina o que começa","Escuta ativa e empatia genuína","Lealdade e espírito de equipe","Paciência com pessoas e processos","Presença que acalma o ambiente"],
-    melhorias:["Adaptar-se mais rápido a mudanças","Aprender a dizer não e impor limites","Expor opiniões mesmo em cenários de conflito","Ganhar ritmo em ambientes acelerados"]},
-  C:{nome:"Conformidade",cor:"var(--c)",resumo:"análise, precisão e excelência técnica",
-    fortes:["Rigor analítico: decide com base em fatos","Atenção a detalhes e padrão de qualidade","Planejamento estruturado","Disciplina com processos e prazos técnicos","Pensamento crítico apurado"],
-    melhorias:["Equilibrar perfeccionismo com prazo","Tolerar ambiguidade e dados incompletos","Comunicar-se de forma mais calorosa","Aceitar o \u201cbom o suficiente\u201d quando cabível"]}
-};
-
-const COMBOS = {
-  DI:"Você une a energia de quem decide com o carisma de quem convence: perfil natural para liderar pela frente, vendendo a visão e cobrando o resultado.",
-  DS:"Você combina determinação com constância: decide rápido, mas sustenta a execução até o fim — perfil de quem entrega com consistência.",
-  DC:"Você é estrategista e exigente: junta a ousadia de decidir com o rigor de analisar. Perfil forte para liderar projetos técnicos e complexos.",
-  ID:"Você influencia com ousadia: comunica bem e não teme a disputa. Perfil de alto impacto em vendas, negociação e representação.",
-  IS:"Você é o comunicador acolhedor: conecta pessoas e as faz se sentirem ouvidas. Perfil forte para desenvolver times e relacionamentos de longo prazo.",
-  IC:"Você une carisma e raciocínio analítico: sabe traduzir dados e temas técnicos em histórias que convencem. Perfil de ponte entre negócio e técnica.",
-  SD:"Você é estável e determinado: prefere constância, mas não foge de assumir a frente quando é preciso. Perfil de liderança operacional confiável.",
-  SI:"Você apoia com sociabilidade: constrói harmonia e mantém o grupo unido. Perfil forte em atendimento, cuidado e gestão de pessoas.",
-  SC:"Você é consistente e meticuloso: entrega com qualidade, no ritmo certo, sem alarde. Perfil de confiança para operações críticas e rotinas essenciais.",
-  CD:"Você é o técnico que decide: domina o detalhe, mas não trava na análise. Perfil para arquitetar soluções e liderar tecnicamente.",
-  CI:"Você é analítico e comunicativo: domina os detalhes e ainda sabe explicá-los com clareza. Perfil valioso onde técnica e pessoas se encontram.",
-  CS:"Você é preciso e constante: metódico, confiável e minucioso. Perfil ideal para áreas em que errar não é opção."
-};
-
-// ─── Estado ─────────────────────────────────────────────────────────
-let idx = 0;
-let respostas = new Array(AFIRMACOES.length).fill(0);
-
-function iniciar(){
-  idx = 0; respostas = new Array(AFIRMACOES.length).fill(0);
-  trocarTela("telaPergunta");
-  mostrarPergunta();
+function carregar(){
+  try{
+    const raw = localStorage.getItem("financas-v1");
+    if(raw){
+      const d=JSON.parse(raw);
+      return {
+        transacoes:d.transacoes||[],
+        categorias:d.categorias||JSON.parse(JSON.stringify(CATS_PADRAO)),
+        recorrencias:d.recorrencias||[],
+        excecoes:d.excecoes||{}
+      };
+    }
+  }catch(e){}
+  return {transacoes:[],categorias:JSON.parse(JSON.stringify(CATS_PADRAO)),recorrencias:[],excecoes:{}};
 }
-function trocarTela(id){
-  ["telaIntro","telaPergunta","telaResultado"].forEach(t=>document.getElementById(t).classList.add("oculta"));
-  document.getElementById(id).classList.remove("oculta");
-  window.scrollTo(0,0);
+function persistir(){ try{ localStorage.setItem("financas-v1", JSON.stringify(dados)); }catch(e){ alert("Não foi possível salvar os dados neste navegador."); } }
+
+// ─── Utilidades ─────────────────────────────────────────────────────
+const ICO_CHECK='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0F241B" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+const ICO_OLHO='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>';
+const ICO_OLHO_OFF='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
+let oculto = localStorage.getItem("financas-oculto")==="1";
+const fmt = v => oculto ? "R$ \u2022\u2022\u2022\u2022" : v.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+function alternarOculto(){
+  oculto=!oculto;
+  localStorage.setItem("financas-oculto", oculto?"1":"0");
+  document.getElementById("btnOlho").innerHTML = oculto?ICO_OLHO_OFF:ICO_OLHO;
+  render();
 }
-function mostrarPergunta(){
-  document.getElementById("barraProg").style.width = (idx/AFIRMACOES.length*100)+"%";
-  document.getElementById("contador").textContent = `Afirmação ${idx+1} de ${AFIRMACOES.length}`;
-  document.getElementById("afirmacao").textContent = AFIRMACOES[idx][1];
-  document.getElementById("btnVoltar").style.visibility = idx>0 ? "visible" : "hidden";
-  document.querySelectorAll(".opcao").forEach((b,i)=>{
-    b.classList.toggle("sel", respostas[idx]===i+1);
+const hojeISO = ()=>{const d=new Date();return isoDe(d.getFullYear(),d.getMonth()+1,d.getDate())};
+const isoDe = (a,m,d)=>`${a}-${String(m).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+const parseValor = s => { const n=parseFloat(String(s).replace(/\./g,"").replace(",",".")); return isNaN(n)?0:n; };
+function mascaraValor(el){
+  const dig = el.value.replace(/\D/g,"").slice(0,12);
+  if(!dig){ el.value=""; return; }
+  el.value = (parseInt(dig,10)/100).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});
+}
+const esc = s => String(s).replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const diasNoMes = (a,m)=> new Date(a,m+1,0).getDate(); // m 0-indexado
+
+// ─── Recorrências: ocorrências do mês ───────────────────────────────
+function ocorrenciasNoMes(rec, ano, mes){ // mes 0-indexado
+  const out=[];
+  const nDias = diasNoMes(ano,mes);
+  if(rec.freq==="semanal"){
+    for(let d=1; d<=nDias; d++){
+      const dt = new Date(ano,mes,d);
+      const iso = isoDe(ano,mes+1,d);
+      if(dt.getDay()===rec.diaSemana && iso>=rec.inicio) out.push(iso);
+    }
+  } else if(rec.freq==="mensal"){
+    const dia = Math.min(rec.diaMes, nDias);
+    const iso = isoDe(ano,mes+1,dia);
+    // inclui a partir do MÊS de início (mesmo que o dia já tenha passado nele)
+    if(iso.slice(0,7) >= rec.inicio.slice(0,7)) out.push(iso);
+  }
+  return out;
+}
+function virtuaisDoMes(ano,mes){
+  const out=[];
+  dados.recorrencias.forEach(rec=>{
+    ocorrenciasNoMes(rec,ano,mes).forEach(iso=>{
+      const ex = (dados.excecoes[rec.id]||{})[iso];
+      if(!ex) out.push({recId:rec.id,tipo:rec.tipo,valor:rec.valor,descricao:rec.descricao,categoria:rec.categoria,data:iso,freq:rec.freq});
+    });
   });
+  return out;
 }
-function responder(valor){
-  respostas[idx] = valor;
-  document.querySelectorAll(".opcao").forEach((b,i)=>b.classList.toggle("sel", valor===i+1));
-  setTimeout(()=>{
-    if(idx < AFIRMACOES.length-1){ idx++; mostrarPergunta(); }
-    else { resultado(); }
-  }, 180);
-}
-function voltar(){
-  if(idx>0){ idx--; mostrarPergunta(); }
+function marcarExcecao(recId,iso,tipo){
+  if(!dados.excecoes[recId]) dados.excecoes[recId]={};
+  dados.excecoes[recId][iso]=tipo;
 }
 
-// ─── Resultado ──────────────────────────────────────────────────────
-function resultado(){
-  const soma = {D:0,I:0,S:0,C:0};
-  AFIRMACOES.forEach((a,i)=>{ soma[a[0]] += respostas[i]; });
-  // 6 afirmações por dimensão: mínimo 6, máximo 30
-  const pct = {};
-  for(const k of ["D","I","S","C"]) pct[k] = Math.round((soma[k]-6)/24*100);
+// ─── Renderização ───────────────────────────────────────────────────
+function render(){
+  document.getElementById("mesLabel").textContent = `${MESES[mesAtual.mes]} ${mesAtual.ano}`;
 
-  const ordem = ["D","I","S","C"].sort((a,b)=>pct[b]-pct[a]);
-  const p1 = ordem[0], p2 = ordem[1];
-  const P1 = PERFIS[p1], P2 = PERFIS[p2];
-  const combo = COMBOS[p1+p2] || "";
-  const empate = pct[p1]===pct[p2];
+  const doMes = dados.transacoes.filter(t=>{const [a,m]=t.data.split("-").map(Number); return a===mesAtual.ano && m-1===mesAtual.mes;});
+  const efet = doMes.filter(t=>t.status==="efetivado");
+  const planFixos = doMes.filter(t=>t.status==="planejado");
+  const planVirtuais = virtuaisDoMes(mesAtual.ano, mesAtual.mes);
+  const plan = [...planFixos, ...planVirtuais].sort((a,b)=>a.data<b.data?-1:1);
 
-  const barras = ["D","I","S","C"].map(k=>`
-    <div class="barra-linha">
-      <div class="barra-letra" style="color:${PERFIS[k].cor}">${k}</div>
-      <div class="barra-trilha"><div class="barra-fill" style="width:${Math.max(pct[k],3)}%;background:${PERFIS[k].cor}"></div></div>
-      <div class="barra-pct mono">${pct[k]}%</div>
-    </div>`).join("");
+  const rec = efet.filter(t=>t.tipo==="receita").reduce((s,t)=>s+t.valor,0);
+  const desp = efet.filter(t=>t.tipo==="despesa").reduce((s,t)=>s+t.valor,0);
+  const saldo = rec-desp;
+  const recPlan = plan.filter(t=>t.tipo==="receita").reduce((s,t)=>s+t.valor,0);
+  const despPlan = plan.filter(t=>t.tipo==="despesa").reduce((s,t)=>s+t.valor,0);
+  const previsto = saldo + recPlan - despPlan;
 
-  const li = (arr,cor)=>arr.map(x=>`<li style="--cor:${cor}">${x}</li>`).join("");
+  const sv = document.getElementById("saldoValor");
+  sv.textContent = fmt(saldo);
+  sv.className = "valor mono " + (saldo>=0?"cor-mint":"cor-coral");
 
-  // compatibilidade: média do perfil ponderada pelos pesos de cada profissão
-  const top3 = PROFISSOES.map(p=>({
-      n:p.n,
-      score: Math.round(p.w[0]*pct.D + p.w[1]*pct.I + p.w[2]*pct.S + p.w[3]*pct.C)
-    }))
-    .sort((a,b)=>b.score-a.score)
-    .slice(0,3);
-  const corTop = [P1.cor, P1.cor, P2.cor];
-  const blocoProf = top3.map((p,i)=>`
-    <div class="barra-linha">
-      <div style="flex:1;font-size:14px">${i+1}. ${p.n}</div>
-      <div class="barra-trilha" style="max-width:110px"><div class="barra-fill" style="width:${p.score}%;background:${corTop[i]}"></div></div>
-      <div class="barra-pct mono" style="width:46px">${p.score}%</div>
-    </div>`).join("");
+  document.getElementById("previstoLinha").innerHTML = plan.length
+    ? `previsto no fim do mês: <b class="mono ${previsto>=0?"cor-mint":"cor-coral"}">${fmt(previsto)}</b><br>a pagar ${fmt(despPlan)}${recPlan?` · a receber ${fmt(recPlan)}`:""}`
+    : "";
 
-  document.getElementById("telaResultado").innerHTML = `
-    <div class="selo">
-      <b style="background:${P1.cor}">${p1}</b>
-      <b style="background:${P2.cor}">${p2}</b>
-    </div>
-    <h2>Perfil ${P1.nome}${empate?" e ":" com "}${P2.nome}</h2>
-    <p class="desc-perfil">Seu estilo predominante é <strong style="color:${P1.cor}">${P1.nome}</strong> (${P1.resumo}), apoiado por <strong style="color:${P2.cor}">${P2.nome}</strong> (${P2.resumo}).</p>
-    ${combo?`<p class="desc-perfil">${combo}</p>`:""}
+  document.getElementById("recValor").textContent = fmt(rec);
+  document.getElementById("despValor").textContent = fmt(desp);
 
-    <div class="bloco">
-      <div class="titulo-sec">Seu mapa DISC</div>
-      ${barras}
-    </div>
+  // ── Planejados (fixos + recorrentes)
+  const sp = document.getElementById("secaoPlanejados");
+  if(plan.length){
+    const hoje = hojeISO();
+    sp.innerHTML = `<div class="secao">Planejados (a pagar / a receber)</div>` + plan.map(t=>{
+      const [,m,d]=t.data.split("-");
+      const vencido = t.tipo==="despesa" && t.data < hoje;
+      const ehRec = !!t.recId;
+      const chave = ehRec ? `'${t.recId}','${t.data}'` : t.id;
+      return `<div class="item plano" onclick="${ehRec?`editarRec(${chave})`:`editar(${t.id})`}">
+        <button class="chk" onclick="event.stopPropagation();${ehRec?`efetivarRec(${chave})`:`efetivar(${chave})`}" aria-label="Marcar como pago"></button>
+        <div class="dia mono ${vencido?"vencido":""}">${d}/${m}</div>
+        <div class="meio">
+          <div class="desc">${esc(t.descricao||t.categoria)}${vencido?' <span class="cor-coral">· vencido</span>':""}</div>
+          <div class="cat">${esc(t.categoria)}${ehRec?` <span class="badge-rec">↻ ${t.freq==="semanal"?"semanal":"mensal"}</span>`:""}</div>
+        </div>
+        <div class="vlr mono ${t.tipo==="receita"?"cor-mint":"cor-amber"}">${t.tipo==="receita"?"+":"−"}${fmt(t.valor)}</div>
+        <button class="acao" onclick="event.stopPropagation();${ehRec?`pularRec(${chave})`:`remover(${chave})`}" aria-label="Excluir">✕</button>
+      </div>`;
+    }).join("");
+  } else sp.innerHTML = "";
 
-    <div class="bloco">
-      <div class="titulo-sec">Pontos fortes</div>
-      <ul class="lista">${li(P1.fortes,P1.cor)}${li(P2.fortes.slice(0,2),P2.cor)}</ul>
-    </div>
+  // ── Recorrências ativas (gerenciar)
+  const sr = document.getElementById("secaoRecorrencias");
+  if(dados.recorrencias.length){
+    let html = `<button class="link-rec" onclick="mostrarRegras=!mostrarRegras;render()">${mostrarRegras?"▾":"▸"} Recorrências ativas (${dados.recorrencias.length})</button>`;
+    if(mostrarRegras){
+      html += dados.recorrencias.map(r=>{
+        const quando = r.freq==="semanal" ? `toda ${DIAS_SEMANA[r.diaSemana]}` : `todo dia ${r.diaMes}`;
+        return `<div class="rec-regra" onclick="editarRegra(${r.id})" style="cursor:pointer">
+          <div class="meio" style="flex:1;min-width:0">
+            <div>${esc(r.descricao||r.categoria)}</div>
+            <div class="freq">↻ ${quando} · ${esc(r.categoria)}</div>
+          </div>
+          <div class="vlr mono ${r.tipo==="receita"?"cor-mint":"cor-coral"}" style="font-size:13px">${r.tipo==="receita"?"+":"−"}${fmt(r.valor)}</div>
+          <button class="acao" onclick="event.stopPropagation();removerRegra(${r.id})" aria-label="Encerrar recorrência">✕</button>
+        </div>`;
+      }).join("");
+    }
+    sr.innerHTML = html;
+  } else sr.innerHTML = "";
 
-    <div class="bloco">
-      <div class="titulo-sec">Pontos de desenvolvimento</div>
-      <ul class="lista">${li(P1.melhorias,P1.cor)}${li(P2.melhorias.slice(0,1),P2.cor)}</ul>
-    </div>
+  // ── Gráfico de rosca: gastos por categoria (despesas efetivadas)
+  const porCat={};
+  efet.filter(t=>t.tipo==="despesa").forEach(t=>{porCat[t.categoria]=(porCat[t.categoria]||0)+t.valor;});
+  const cats = Object.entries(porCat).sort((a,b)=>b[1]-a[1]);
+  const sc = document.getElementById("secaoCategorias");
+  if(cats.length){
+    const R=54, STROKE=26, C=2*Math.PI*R;
+    let off=0;
+    const arcos = cats.map(([c,v],i)=>{
+      const frac=v/desp;
+      const seg=`<circle r="${R}" cx="80" cy="80" fill="none" stroke="${CORES[i%CORES.length]}"
+        stroke-width="${STROKE}" stroke-dasharray="${(frac*C).toFixed(2)} ${C.toFixed(2)}"
+        stroke-dashoffset="${(-off*C).toFixed(2)}" transform="rotate(-90 80 80)"/>`;
+      off+=frac;
+      return seg;
+    }).join("");
+    sc.innerHTML = `<div class="bloco"><div class="secao">Gastos por categoria</div>
+      <div class="rosca-area">
+        <svg width="160" height="160" viewBox="0 0 160 160" role="img" aria-label="Gráfico de gastos por categoria">
+          ${arcos}
+          <text x="80" y="74" text-anchor="middle" fill="#9DBBAA" font-size="11" font-family="system-ui">total</text>
+          <text x="80" y="92" text-anchor="middle" fill="#EDF5EE" font-size="14" font-weight="700"
+            font-family="ui-monospace,Menlo,monospace">${fmt(desp)}</text>
+        </svg>
+        <div style="width:100%">
+        ${cats.map(([c,v],i)=>`<div class="cat-linha">
+          <span class="ponto" style="background:${CORES[i%CORES.length]}"></span>
+          <span style="flex:1">${esc(c)}</span>
+          <span class="pct mono">${Math.round(v/desp*100)}%</span>
+          <span class="val mono">${fmt(v)}</span>
+        </div>`).join("")}
+        </div>
+      </div></div>`;
+  } else sc.innerHTML = "";
 
-    <div class="bloco">
-      <div class="titulo-sec">Profissões mais compatíveis com você</div>
-      ${blocoProf}
-    </div>
+  // ── Lançamentos efetivados
+  const ll = document.getElementById("listaLancamentos");
+  const ordenados = [...efet].sort((a,b)=>a.data<b.data?1:-1);
+  ll.innerHTML = ordenados.length ? ordenados.map(t=>{
+    const [,m,d]=t.data.split("-");
+    return `<div class="item" onclick="editar(${t.id})">
+      <button class="chk on" onclick="event.stopPropagation();desfazer(${t.id})" aria-label="Desmarcar pagamento">${ICO_CHECK}</button>
+      <div class="dia mono">${d}/${m}</div>
+      <div class="meio"><div class="desc">${esc(t.descricao||t.categoria)}</div><div class="cat">${esc(t.categoria)}${t.recId?' <span class="badge-rec">↻</span>':""}</div></div>
+      <div class="vlr mono ${t.tipo==="receita"?"cor-mint":"cor-coral"}">${t.tipo==="receita"?"+":"−"}${fmt(t.valor)}</div>
+      <button class="acao" onclick="event.stopPropagation();remover(${t.id})" aria-label="Excluir">✕</button>
+    </div>`;
+  }).join("") : `<div class="vazio">Nenhum lançamento efetivado neste mês.<br>Toque em <b>+ Adicionar</b> para começar.</div>`;
+}
 
-    <p class="rodape-nota">Nenhum perfil é melhor que outro — cada estilo agrega valor diferente a um time. Este resultado reflete suas respostas de hoje e é um ponto de partida para reflexão, não um veredito. Instrumento inspirado no DISC, sem validação psicométrica formal.</p>
+function mudarMes(delta){
+  let m=mesAtual.mes+delta, a=mesAtual.ano;
+  if(m<0){m=11;a--} if(m>11){m=0;a++}
+  mesAtual={ano:a,mes:m}; render();
+}
 
-    <button class="btn-p" onclick="iniciar()">Refazer o teste</button>
-    <button class="btn-sec" onclick="trocarTela('telaIntro')">Voltar ao início</button>
-  `;
-  trocarTela("telaResultado");
+// ─── Ações ──────────────────────────────────────────────────────────
+function efetivar(id){
+  const t = dados.transacoes.find(x=>x.id===id);
+  if(t){ t.status="efetivado"; persistir(); render(); }
+}
+function efetivarRec(recId, iso){
+  const r = dados.recorrencias.find(x=>String(x.id)===String(recId));
+  if(!r) return;
+  dados.transacoes.unshift({id:Date.now(),tipo:r.tipo,status:"efetivado",valor:r.valor,descricao:r.descricao,categoria:r.categoria,data:iso,recId});
+  marcarExcecao(recId,iso,"efetivado");
+  persistir(); render();
+}
+function pularRec(recId, iso){
+  marcarExcecao(recId,iso,"removido");
+  persistir(); render();
+}
+function removerRegra(id){
+  if(!confirm("Encerrar esta recorrência? Os lançamentos já efetivados serão mantidos.")) return;
+  dados.recorrencias = dados.recorrencias.filter(r=>r.id!==id);
+  delete dados.excecoes[id];
+  persistir(); render();
+}
+function desfazer(id){
+  const t = dados.transacoes.find(x=>x.id===id);
+  if(!t) return;
+  if(t.recId){
+    // veio de uma recorrência: remove o lançamento e a ocorrência volta a aparecer como planejada
+    if(dados.excecoes[t.recId]) delete dados.excecoes[t.recId][t.data];
+    dados.transacoes = dados.transacoes.filter(x=>x.id!==id);
+  } else {
+    t.status = "planejado";
+  }
+  persistir(); render();
+}
+function remover(id){
+  dados.transacoes = dados.transacoes.filter(x=>x.id!==id);
+  persistir(); render();
+}
+function exportarCSV(){
+  const linhas = [["data","tipo","status","categoria","descricao","valor","recorrente"]];
+  [...dados.transacoes].sort((a,b)=>a.data<b.data?-1:1).forEach(t=>{
+    linhas.push([t.data,t.tipo,t.status,t.categoria,(t.descricao||"").replace(/;/g,","),String(t.valor).replace(".",","),t.recId?"sim":"não"]);
+  });
+  const csv = "\uFEFF"+linhas.map(l=>l.join(";")).join("\n");
+  const blob = new Blob([csv],{type:"text/csv;charset=utf-8"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "financas.csv";
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+// ─── Formulário ─────────────────────────────────────────────────────
+function abrirForm(){
+  editandoId=null; editandoRec=null; editandoRegra=null;
+  document.getElementById("blocoEscopo").style.display="none";
+  fCategoria=""; fStatus="efetivado"; fFreq="unica";
+  document.getElementById("valor").value="";
+  document.getElementById("descricao").value="";
+  document.getElementById("dataInput").value=hojeISO();
+  document.getElementById("erroMsg").style.display="none";
+  document.getElementById("linhaNova").classList.remove("aberta");
+  document.getElementById("blocoFreq").style.display="block";
+  document.getElementById("btnSalvar").textContent="Salvar lançamento";
+  setTipo(fTipo); setStatus(fStatus); setFreq(fFreq);
+  document.getElementById("overlay").classList.add("aberto");
+}
+function setEscopo(e){
+  fEscopo=e;
+  document.getElementById("btnEscopoSo").className = e==="so"?"ativo-neutro":"";
+  document.getElementById("btnEscopoTodas").className = e==="todas"?"ativo-neutro":"";
+}
+function editarRec(recId, iso){
+  const r = dados.recorrencias.find(x=>String(x.id)===String(recId));
+  if(!r) return;
+  editandoRec={recId:String(recId), data:iso}; editandoId=null; editandoRegra=null;
+  document.getElementById("valor").value=r.valor.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});
+  document.getElementById("descricao").value=r.descricao||"";
+  document.getElementById("dataInput").value=iso;
+  document.getElementById("erroMsg").style.display="none";
+  document.getElementById("linhaNova").classList.remove("aberta");
+  document.getElementById("blocoFreq").style.display="none";
+  document.getElementById("blocoStatus").style.display="none";
+  document.getElementById("blocoEscopo").style.display="grid";
+  document.getElementById("btnSalvar").textContent="Salvar alterações";
+  setTipo(r.tipo);
+  fCategoria=r.categoria; renderChips();
+  setEscopo("so");
+  document.getElementById("overlay").classList.add("aberto");
+}
+function editarRegra(id){
+  const r = dados.recorrencias.find(x=>x.id===id);
+  if(!r) return;
+  editandoRegra=id; editandoId=null; editandoRec=null;
+  document.getElementById("valor").value=r.valor.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});
+  document.getElementById("descricao").value=r.descricao||"";
+  document.getElementById("dataInput").value=r.inicio;
+  document.getElementById("erroMsg").style.display="none";
+  document.getElementById("linhaNova").classList.remove("aberta");
+  document.getElementById("blocoFreq").style.display="block";
+  document.getElementById("blocoEscopo").style.display="none";
+  document.getElementById("btnSalvar").textContent="Salvar alterações";
+  setTipo(r.tipo);
+  fCategoria=r.categoria; renderChips();
+  setFreq(r.freq);
+  document.getElementById("overlay").classList.add("aberto");
+}
+function editar(id){
+  const t = dados.transacoes.find(x=>x.id===id);
+  if(!t) return;
+  editandoId=id; editandoRec=null; editandoRegra=null;
+  document.getElementById("blocoEscopo").style.display="none";
+  document.getElementById("valor").value=t.valor.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});
+  document.getElementById("descricao").value=t.descricao||"";
+  document.getElementById("dataInput").value=t.data;
+  document.getElementById("erroMsg").style.display="none";
+  document.getElementById("linhaNova").classList.remove("aberta");
+  // itens que já pertencem a uma recorrência não podem virar outra
+  document.getElementById("blocoFreq").style.display = t.recId ? "none" : "block";
+  document.getElementById("btnSalvar").textContent="Salvar alterações";
+  setTipo(t.tipo);
+  fCategoria=t.categoria; renderChips();
+  setFreq("unica");
+  setStatus(t.status);
+  document.getElementById("blocoStatus").style.display="grid";
+  document.getElementById("overlay").classList.add("aberto");
+}
+function fecharForm(){ document.getElementById("overlay").classList.remove("aberto"); }
+
+function setTipo(t){
+  fTipo=t; fCategoria="";
+  document.getElementById("btnDespesa").className = t==="despesa"?"ativo-despesa":"";
+  document.getElementById("btnReceita").className = t==="receita"?"ativo-receita":"";
+  renderChips();
+}
+function setStatus(s){
+  fStatus=s;
+  document.getElementById("btnEfetivado").className = s==="efetivado"?"ativo-receita":"";
+  document.getElementById("btnPlanejado").className = s==="planejado"?"ativo-neutro":"";
+  document.getElementById("dicaData").textContent = s==="planejado"?"(vencimento / previsão)":"";
+}
+function setFreq(f){
+  fFreq=f;
+  document.getElementById("btnUnica").className = f==="unica"?"ativo-receita":"";
+  document.getElementById("btnSemanal").className = f==="semanal"?"ativo-neutro":"";
+  document.getElementById("btnMensal").className = f==="mensal"?"ativo-neutro":"";
+  // recorrente sempre gera "planejados" automáticos; esconde o toggle de status
+  document.getElementById("blocoStatus").style.display = f==="unica"?"grid":"none";
+  atualizarDicaFreq();
+}
+function atualizarDicaFreq(){
+  const el=document.getElementById("dicaFreq");
+  const data=document.getElementById("dataInput").value || hojeISO();
+  const [a,m,d]=data.split("-").map(Number);
+  const dt=new Date(a,m-1,d);
+  if(fFreq==="semanal") el.textContent=`↻ Vai repetir toda ${DIAS_SEMANA[dt.getDay()]}, a partir de ${String(d).padStart(2,"0")}/${String(m).padStart(2,"0")}`;
+  else if(fFreq==="mensal") el.textContent=`↻ Vai repetir todo dia ${d} de cada mês, a partir de ${MESES[m-1]}`;
+  else el.textContent="";
+}
+function renderChips(){
+  const box=document.getElementById("chipsCats");
+  box.innerHTML = dados.categorias[fTipo].map(c=>
+    `<button class="chip ${fCategoria===c?"sel":""}" onclick="selCat('${esc(c).replace(/'/g,"\\'")}')">${esc(c)}</button>`
+  ).join("") + `<button class="chip nova" onclick="document.getElementById('linhaNova').classList.toggle('aberta')">+ nova</button>`;
+}
+function selCat(c){ fCategoria=c; renderChips(); }
+function criarCategoria(){
+  const nome=document.getElementById("novaCat").value.trim();
+  if(!nome) return;
+  if(!dados.categorias[fTipo].includes(nome)){ dados.categorias[fTipo].push(nome); persistir(); }
+  fCategoria=nome;
+  document.getElementById("novaCat").value="";
+  document.getElementById("linhaNova").classList.remove("aberta");
+  renderChips();
+}
+function salvarLancamento(){
+  const v=parseValor(document.getElementById("valor").value);
+  const err=document.getElementById("erroMsg");
+  if(v<=0){ err.textContent="Informe um valor maior que zero."; err.style.display="block"; return; }
+  if(!fCategoria){ err.textContent="Escolha uma categoria."; err.style.display="block"; return; }
+  const data=document.getElementById("dataInput").value || hojeISO();
+  const desc=document.getElementById("descricao").value.trim();
+  const [a,m,d]=data.split("-").map(Number);
+
+  if(editandoRec){
+    const rec = editandoRec; editandoRec=null;
+    if(fEscopo==="so"){
+      // esta ocorrência vira um lançamento próprio; a regra pula esta data
+      marcarExcecao(rec.recId, rec.data, "removido");
+      dados.transacoes.unshift({id:Date.now(),tipo:fTipo,status:"planejado",valor:v,descricao:desc,categoria:fCategoria,data});
+    } else {
+      const r = dados.recorrencias.find(x=>String(x.id)===String(rec.recId));
+      if(r){
+        r.tipo=fTipo; r.valor=v; r.descricao=desc; r.categoria=fCategoria;
+        if(r.freq==="semanal") r.diaSemana=new Date(a,m-1,d).getDay();
+        else r.diaMes=d;
+        if(data < r.inicio) r.inicio=data;
+      }
+    }
+  } else if(editandoRegra){
+    const rid = editandoRegra; editandoRegra=null;
+    const r = dados.recorrencias.find(x=>x.id===rid);
+    if(r){
+      if(fFreq==="unica"){
+        // deixa de repetir: encerra a regra e vira um lançamento único planejado
+        dados.recorrencias = dados.recorrencias.filter(x=>x.id!==rid);
+        delete dados.excecoes[rid];
+        dados.transacoes.unshift({id:Date.now(),tipo:fTipo,status:"planejado",valor:v,descricao:desc,categoria:fCategoria,data});
+      } else {
+        r.tipo=fTipo; r.valor=v; r.descricao=desc; r.categoria=fCategoria; r.freq=fFreq;
+        delete r.diaSemana; delete r.diaMes;
+        if(fFreq==="semanal") r.diaSemana=new Date(a,m-1,d).getDay();
+        else r.diaMes=d;
+        if(data < r.inicio) r.inicio=data;
+      }
+    }
+  } else if(editandoId){
+    const t = dados.transacoes.find(x=>x.id===editandoId);
+    if(t){
+      if(fFreq!=="unica" && !t.recId){
+        // transformar este lançamento em recorrente
+        const regra={id:Date.now(),tipo:fTipo,valor:v,descricao:desc,categoria:fCategoria,freq:fFreq,inicio:data};
+        if(fFreq==="semanal") regra.diaSemana=new Date(a,m-1,d).getDay();
+        else regra.diaMes=d;
+        dados.recorrencias.push(regra);
+        if(t.status==="efetivado"){
+          // mantém o lançamento pago como a 1ª ocorrência da recorrência
+          t.tipo=fTipo; t.valor=v; t.descricao=desc; t.categoria=fCategoria; t.data=data; t.recId=regra.id;
+          marcarExcecao(regra.id,data,"efetivado");
+        } else {
+          // planejado vira ocorrência automática da regra
+          dados.transacoes = dados.transacoes.filter(x=>x.id!==editandoId);
+        }
+      } else {
+        t.tipo=fTipo; t.status=fStatus; t.valor=v; t.descricao=desc; t.categoria=fCategoria; t.data=data;
+      }
+    }
+    editandoId=null;
+  } else if(fFreq==="unica"){
+    dados.transacoes.unshift({id:Date.now(),tipo:fTipo,status:fStatus,valor:v,descricao:desc,categoria:fCategoria,data});
+  } else {
+    const regra={id:Date.now(),tipo:fTipo,valor:v,descricao:desc,categoria:fCategoria,freq:fFreq,inicio:data};
+    if(fFreq==="semanal") regra.diaSemana=new Date(a,m-1,d).getDay();
+    else regra.diaMes=d;
+    dados.recorrencias.push(regra);
+  }
+  persistir();
+  mesAtual={ano:a,mes:m-1};
+  fecharForm(); render();
+}
+
+render();
+
+// ─── PWA: funcionamento offline ─────────────────────────────────────
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js").catch(()=>{});
+  });
 }
 </script>
 </body>
